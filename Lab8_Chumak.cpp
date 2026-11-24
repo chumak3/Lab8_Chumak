@@ -1,0 +1,65 @@
+#include <iostream>
+#include <iomanip>
+#include <limits> 
+
+using namespace std;
+
+int main() {
+    const int MAX_N = 100;
+    double arr[MAX_N][MAX_N];
+    int rows, cols;
+
+    cout << "Введіть кількість рядків і стовпців: ";
+    cin >> rows >> cols;
+
+    if (rows <= 0 || cols <= 0 || rows > MAX_N || cols > MAX_N) {
+        cout << "Некоректний розмір масиву!" << endl;
+        return 1;
+    }
+
+ 
+    cout << "Введіть елементи масиву (" << rows * cols << " дійсних чисел):\n";
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            cin >> arr[i][j];
+        }
+    }
+
+  
+    cout << "\nМасив:\n";
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            cout << setw(8) << arr[i][j] << " ";
+        }
+        cout << endl;
+    }
+
+
+    if (cols < 2) {
+        cout << "\nУ масиві менше 2 стовпців — елементів на парних місцях немає." << endl;
+        return 0;
+    }
+
+    double min_sum = numeric_limits<double>::max();
+    int min_row_index = -1;
+
+    cout << "\nСуми елементів на парних місцях по рядках:\n";
+    for (int i = 0; i < rows; i++) {
+        double even_sum = 0.0;
+        for (int j = 1; j < cols; j += 2) { 
+            even_sum += arr[i][j];
+        }
+
+        cout << "Рядок " << i + 1 << ": сума = " << even_sum << endl;
+
+        if (even_sum < min_sum) {
+            min_sum = even_sum;
+            min_row_index = i;
+        }
+    }
+
+    cout << "\nМінімальна сума на парних місцях: " << min_sum << endl;
+    cout << "Номер рядка з мінімальною сумою: " << min_row_index + 1 << endl;
+
+    return 0;
+}
